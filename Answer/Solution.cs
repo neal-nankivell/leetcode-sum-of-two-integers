@@ -19,7 +19,23 @@ namespace Answer
     {
         public int GetSum(int a, int b)
         {
-            throw new NotImplementedException();
+            var result = a | b;
+            var remainder = a & b;
+
+            while (remainder != 0) // some bits have been counted twice
+            {
+                result &= ~remainder; // Subtract the remainder
+
+                remainder <<= 1; // bit shift up one position
+
+                var newRemainder = result & remainder; // calculate the new overlapping bits
+
+                result |= remainder; // add the remainder on
+
+                remainder = newRemainder; // update the remainder used in the loop
+            }
+
+            return result;
         }
     }
 }
